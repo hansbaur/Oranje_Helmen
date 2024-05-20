@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kosten en Klusjes Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .result-list {
+            list-style: none;
+            padding: 0;
+        }
+        .result-list li {
+            padding: 5px;
+            background-color: #ffffff;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .form-check-label {
+            margin-left: 25px;
+        }
+        .divider {
+            border-top: 5px solid #dee2e6;
+            margin: 20px 0;
+        }
+        .form-section {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Oranje Helmen groepsanalyse</h1>
+        <h3 class="text-center">Bereken Dagelijkse en Wekelijkse Kosten en Klusjes</h3>
+        <div class="text-center mb-4">
+            <a href="/guide" class="btn btn-primary">Uitleg</a>
+        </div>
+
+        <form method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h2>Huidig</h2>
+                        </div>
+                        <div class="card-body form-section">
+                            <div class="form-group">
+                                <label for="total_monthly_rent1">Huurbedrag:</label>
+                                <input type="number" class="form-control" id="total_monthly_rent1" name="total_monthly_rent1" value="{{ form_data.get('total_monthly_rent1', '') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="num_people1">Aantal man:</label>
+                                <input type="number" class="form-control" id="num_people1" name="num_people1" value="{{ form_data.get('num_people1', '') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="num_vehicles1">Aantal voertuigen:</label>
+                                <input type="number" class="form-control" id="num_vehicles1" name="num_vehicles1"  value="{{ form_data.get('num_vehicles1', '') }}" required>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="include_grasgevoerd1" name="include_grasgevoerd1" {% if form_data.get('include_grasgevoerd1') %}checked{% endif %}>
+                                <label class="form-check-label" for="include_grasgevoerd1">Include Grasgevoerd</label>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="include_groentetuin1" name="include_groentetuin1" {% if form_data.get('include_groentetuin1') %}checked{% endif %}>
+                                <label class="form-check-label" for="include_groentetuin1">Include Groentetuin</label>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="include_huisonderhoud1" name="include_huisonderhoud1" {% if form_data.get('include_huisonderhoud1') %}checked{% endif %}>
+                                <label class="form-check-label" for="include_huisonderhoud1">Include Huisonderhoud</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h2>De toekomst</h2>
+                        </div>
+                        <div class="card-body form-section">
+                            <div class="form-group">
+                                <label for="total_monthly_rent2">Huurbedrag:</label>
+                                <input type="number" class="form-control" id="total_monthly_rent2" name="total_monthly_rent2" value="{{ form_data.get('total_monthly_rent2', '') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="num_people2">Aantal man:</label>
+                                <input type="number" class="form-control" id="num_people2" name="num_people2" value="{{ form_data.get('num_people2', '') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="num_vehicles2">Aantal voertuigen:</label>
+                                <input type="number" class="form-control" id="num_vehicles2" name="num_vehicles2" value="{{ form_data.get('num_vehicles2', '') }}" required>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="include_groentetuin2" name="include_groentetuin2" {% if form_data.get('include_groentetuin2') %}checked{% endif %}>
+                                <label class="form-check-label" for="include_groentetuin2">Include Groentetuin</label>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="include_grasgevoerd2" name="include_grasgevoerd2" {% if form_data.get('include_grasgevoerd2') %}checked{% endif %}>
+                                <label class="form-check-label" for="include_grasgevoerd2">Include Grasgevoerd</label>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="include_huisonderhoud2" name="include_huisonderhoud2" {% if form_data.get('include_huisonderhoud2') %}checked{% endif %}>
+                                <label class="form-check-label" for="include_huisonderhoud2">Include Huisonderhoud</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mb-4">
+                <button type="submit" class="btn btn-primary">Bereken</button>
+            </div>
+        </form>
+        
+        {% if daily_costs1 and daily_costs2 %}
+            <div class="divider"></div>
+                <h2 class="text-center">Opsomming:</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Huidig (p.p.):</h3>
+                        <ul class="list-group result-list">
+                            <li class="list-group-item">Totaal dagelijkse kosten: €{{ total_daily_cost1 }}</li>
+                            <li class="list-group-item">Totaal dagelijkse klustijd: {{ total_daily_chore_time1 }} uur</li>
+                            <li class="list-group-item">Totaal wekelijkse kosten: €{{ total_weekly_cost1 }}</li>
+                            <li class="list-group-item">Totaal wekelijkse klustijd: {{ total_weekly_chore_time1 }} uur</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>De Toekomst (p.p.):</h3>
+                        <ul class="list-group result-list">
+                            <li class="list-group-item">Totaal dagelijkse kosten: €{{ total_daily_cost2 }}</li>
+                            <li class="list-group-item">Totaal dagelijkse klustijd: {{ total_daily_chore_time2 }} uur</li>
+                            <li class="list-group-item">Totaal wekelijkse kosten: €{{ total_weekly_cost2 }}</li>
+                            <li class="list-group-item">Totaal wekelijkse klustijd: {{ total_weekly_chore_time2 }} uur</li>
+                        </ul>
+                    </div>
+                </div>
+            <div class="divider"></div>    
+                <div class="text-center mb-4">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDiv" aria-expanded="false" aria-controls="collapseDiv">
+                        Meer data...
+                    </button>
+                </div>
+                <div class="collapse" id="collapseDiv">
+                    <div class="row">               
+                        <div class="col-md-6">
+                            <h3>Huidige Kosten (p.p.):</h3>
+                            <ul class="result-list">
+                                {% for key, value in daily_costs1.items() %}
+                                    <li>{{ key }}: €{{ value }} p/dag</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Toekomstige Kosten (p.p.):</h3>
+                            <ul class="result-list">
+                                {% for key, value in daily_costs2.items() %}
+                                    <li>{{ key }}: €{{ value }} p/dag</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-md-6">      
+                            <h3>Huidige Klustijd (p.p.):</h3>
+                            <ul class="result-list">
+                                {% for key, value in daily_chores1.items() %}
+                                    <li>{{ key }}: {{ value }} uur p/dag</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-md-6">                    
+                            <h3>Toekomstige klustijd (p.p.):</h3>
+                            <ul class="result-list">
+                                {% for key, value in daily_chores2.items() %}
+                                    <li>{{ key }}: {{ value }} uur p/dag</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mb-4">
+                <a href="/guide" class="btn btn-primary">Uitleg</a>
+            </div>
+        {% endif %}
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
